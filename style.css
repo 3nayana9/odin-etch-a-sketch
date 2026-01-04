@@ -1,6 +1,37 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;   /* button on top, grid below */
+  align-items: center;      /* horizontal center */
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;           /* wraps on smaller screens */
+    justify-content: space-between;  /* spreads buttons across full width */
+    align-items: center;
+    width: 600px;              /* same as grid container width */
+    margin: 20px auto;         /* center horizontally with spacing on top */
+    gap: 10px;                 /* space between buttons */
+}
+
+button {
+    flex: 1;                   /* all buttons take equal width */
+    padding: 15px 0;           /* taller buttons */
+    font-size: 1.1rem;         /* bigger text */
+    font-weight: bold;
+    border: 2px solid black;
+          
+}
+
+
+
+
 .container {
-    height: 200px;
-    width: 200px;
+    height: 600px;
+    width: 600px;
     padding: 10px;
     border: 2px solid black;
     display: flex;
@@ -9,8 +40,7 @@
 }
 
 .box {
-    width: 20px;
-    height: 20px;
+    
     border: 1px solid black;
     box-sizing: border-box;
 }

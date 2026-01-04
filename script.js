@@ -1,5 +1,7 @@
 const container = document.querySelector(".container");
 
+
+
 document.getElementById("newGrid").addEventListener("click", () => {
   let N = Number(prompt("Enter number of squares per side (max 100):"));
 
@@ -8,11 +10,10 @@ document.getElementById("newGrid").addEventListener("click", () => {
     return;
   }
 
-  const boxSize = 20;
+  const boxSize = (600/N);
 
   // Resize container
-  container.style.width = `${N * boxSize}px`;
-  container.style.height = `${N * boxSize}px`;
+  
 
   // Clear old grid
   container.innerHTML = "";
@@ -27,27 +28,66 @@ document.getElementById("newGrid").addEventListener("click", () => {
   }
 });
 
+//opacity , color,clear buttons off by default
+let opacityOn = false;
+let colorOn = false;
+
+// Button toggles
+const opacityBtn = document.getElementById("Opacity");
+const colorBtn = document.getElementById("Colors");
+const clearBtn = document.getElementById("Clear");
+
+opacityBtn.addEventListener("click", () => {
+    opacityOn = !opacityOn;
+
+    if (opacityOn) {
+        opacityBtn.style.backgroundColor = "#434144ff";
+        opacityBtn.style.color = "white";
+    } else {
+        opacityBtn.style.backgroundColor = "";
+        opacityBtn.style.color = "";
+    }
+});
+
+colorBtn.addEventListener("click", () => {
+    colorOn = !colorOn;
+
+    if (colorOn) {
+        colorBtn.style.backgroundColor = "#434144ff";
+        colorBtn.style.color = "white";
+    } else {
+        colorBtn.style.backgroundColor = "";
+        colorBtn.style.color = "";
+    }
+});
+
+clearBtn.addEventListener("click", () => {
+    container.innerHTML = ""; 
+});
+
+
 
 container.addEventListener("mouseover", (e) => {
-  if (!e.target.classList.contains("box")) return;
-  
-  let b = e. target;
+    if (!e.target.classList.contains("box")) return;
+    let b = e.target;
 
-  if(!b.dataset.opacity)
-  {
-    let r = Math.floor(Math.random() * 256);
-    let g = Math.floor(Math.random() * 256);
-    let b1 = Math.floor(Math.random() * 256);
+    let r = 0, g = 0, bl = 0;
 
-    b.dataset.color =   `${r},${g},${b1}`;
-    b.dataset.opacity = 0.1
-   }
-   else{
+    // Determine base color
+    if (colorOn) {
+        r = Math.floor(Math.random() * 256);
+        g = Math.floor(Math.random() * 256);
+        bl = Math.floor(Math.random() * 256);
+    }
 
-    let newOp = Math.min(Number(b.dataset.opacity)+0.1,1);
-    b.dataset.opacity = newOp;
-   }
-   
-    b.style.backgroundColor = `rgba(${b.dataset.color}, ${b.dataset.opacity})`;
-  
+    // Handle opacity
+    if (opacityOn) {
+        if (!b.dataset.opacity) b.dataset.opacity = 0.1;
+        else b.dataset.opacity = Math.min(Number(b.dataset.opacity) + 0.1, 1);
+
+        b.style.backgroundColor = `rgba(${r}, ${g}, ${bl}, ${b.dataset.opacity})`;
+    } else {
+        // No opacity → solid color
+        b.style.backgroundColor = colorOn ? `rgb(${r}, ${g}, ${bl})` : "black";
+    }
 });
